@@ -1,0 +1,38 @@
+{
+  "name": "mapbox-gl-style-performance-linter",
+  "version": "0.1.0",
+  "repository": "git@github.com:stamen/mapbox-gl-style-performance-linter.git",
+  "author": "Stamen Design",
+  "license": "ISC",
+  "source": "src/index.js",
+  "main": "dist/main.js",
+  "module": "dist/module.js",
+  "scripts": {
+    "watch": "parcel watch",
+    "build": "parcel build",
+    "test": "jest --watchAll",
+    "alex": "bin/lint-performance ../amazon-mapStyleSandbox/variants/gaia_en/style.json"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.5",
+    "@babel/preset-env": "^7.16.11",
+    "@parcel/babel-preset-env": "^2.0.1",
+    "babel-jest": "^27.5.1",
+    "jest": "^27.3.1",
+    "parcel": "^2.0.1"
+  },
+  "jest": {
+    "clearMocks": true,
+    "testEnvironment": "node",
+    "collectCoverage": false,
+    "transform": {
+      "\\.[jt]s?$": "babel-jest"
+    }
+  },
+  "bin": {
+    "lint-performance": "bin/lint-performance"
+  },
+  "dependencies": {
+    "mapbox-gl-style-recurse": "github:stamen/mapbox-gl-style-recurse"
+  }
+}
