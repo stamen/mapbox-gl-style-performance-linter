@@ -97,20 +97,22 @@ var $456b392db4b6c0fb$var$warnings = [];
     var isSingleInput = inputs.length === 1;
     var isAppropriateOutputs = outputs.length === 2 && outputs.includes(true) && outputs.includes(false);
     if (isSingleInput && isAppropriateOutputs) $456b392db4b6c0fb$var$warnings.push("".concat(layerId, ": ").concat(key, " contains single match expression ").concat(JSON.stringify(matchExp)));
+     // We return the existing match expression as-is because createRecurseStyle
+    // can also be used to transform a stylesheet, but we only want to use it to warn
     return matchExp;
 };
 /**
- * replaceSingleMatchCondition
+ * isMatch
  * Condition to run single match linter on
  * @param {Array} exp - expression
  * @returns {boolean} - true or false
- */ var $456b392db4b6c0fb$var$singleMatchCondition = function singleMatchCondition(exp) {
+ */ var $456b392db4b6c0fb$var$isMatch = function isMatch(exp) {
     return !!(Array.isArray(exp) && exp[0] === 'match');
 };
 var $456b392db4b6c0fb$var$lintSingleMatchExpressions = function lintSingleMatchExpressions(style) {
     var lintSingleMatches = (0, $gXNCa$mapboxglstylerecurse.createRecurseStyle)({
         transformFn: $456b392db4b6c0fb$var$lintSingleMatch,
-        transformCondition: $456b392db4b6c0fb$var$singleMatchCondition
+        transformCondition: $456b392db4b6c0fb$var$isMatch
     });
     lintSingleMatches(style);
     return $456b392db4b6c0fb$var$warnings;

@@ -31,23 +31,25 @@ const lintSingleMatch = (layerId, matchExp, key) => {
     );
   }
 
+  // We return the existing match expression as-is because createRecurseStyle
+  // can also be used to transform a stylesheet, but we only want to use it to warn
   return matchExp;
 };
 
 /**
- * replaceSingleMatchCondition
+ * isMatch
  * Condition to run single match linter on
  * @param {Array} exp - expression
  * @returns {boolean} - true or false
  */
-const singleMatchCondition = exp => {
+const isMatch = exp => {
   return !!(Array.isArray(exp) && exp[0] === 'match');
 };
 
 const lintSingleMatchExpressions = style => {
   const lintSingleMatches = createRecurseStyle({
     transformFn: lintSingleMatch,
-    transformCondition: singleMatchCondition
+    transformCondition: isMatch
   });
   lintSingleMatches(style);
   return warnings;
