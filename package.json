@@ -24,10 +24,7 @@
   "jest": {
     "clearMocks": true,
     "testEnvironment": "node",
-    "collectCoverage": false,
-    "transform": {
-      "\\.[jt]s?$": "babel-jest"
-    }
+    "collectCoverage": false
   },
   "bin": {
     "lint-performance": "bin/lint-performance"
