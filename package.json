@@ -11,7 +11,7 @@
     "watch": "parcel watch",
     "build": "parcel build",
     "test": "jest --watchAll",
-    "alex": "bin/lint-performance ../amazon-mapStyleSandbox/variants/gaia_en/style.json"
+    "alex": "bin/mapbox-gl-style-performance-linter ../amazon-mapStyleSandbox/variants/gaia_en/style.json"
   },
   "devDependencies": {
     "@babel/core": "^7.17.5",
@@ -27,7 +27,7 @@
     "collectCoverage": false
   },
   "bin": {
-    "lint-performance": "bin/lint-performance"
+    "mapbox-gl-style-performance-linter": "bin/mapbox-gl-style-performance-linter"
   },
   "dependencies": {
     "mapbox-gl-style-recurse": "github:stamen/mapbox-gl-style-recurse"

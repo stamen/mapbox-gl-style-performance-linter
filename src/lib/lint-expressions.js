@@ -1,8 +1,7 @@
 import { lintSingleMatchExpressions } from './expressions/single-match';
 
-let warnings = [];
-
 const lintExpressions = style => {
+  let warnings = [];
   warnings = warnings.concat(lintSingleMatchExpressions(style));
   return warnings;
 };

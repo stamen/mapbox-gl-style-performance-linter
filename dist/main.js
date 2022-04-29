@@ -63,10 +63,10 @@ Object.defineProperty(module.exports, "__esModule", {
 module.exports.lintExpressions = void 0;
 
 var $5XvV8 = parcelRequire("5XvV8");
-var $584bb025c07ec82e$var$warnings = [];
 var $584bb025c07ec82e$var$lintExpressions = function lintExpressions(style) {
-    $584bb025c07ec82e$var$warnings = $584bb025c07ec82e$var$warnings.concat((0, $5XvV8.lintSingleMatchExpressions)(style));
-    return $584bb025c07ec82e$var$warnings;
+    var warnings = [];
+    warnings = warnings.concat((0, $5XvV8.lintSingleMatchExpressions)(style));
+    return warnings;
 };
 module.exports.lintExpressions = $584bb025c07ec82e$var$lintExpressions;
 
@@ -78,44 +78,39 @@ Object.defineProperty(module.exports, "__esModule", {
 });
 module.exports.lintSingleMatchExpressions = void 0;
 
-var $456b392db4b6c0fb$var$warnings = [];
 /**
- * lintSingleMatch
- * Checks if a match expression has a single input and outputs true, false
- * @param {Array} matchExp - match expression
- * @returns {Array} - either the same match expression or more performant "==" expression
- */ var $456b392db4b6c0fb$var$lintSingleMatch = function lintSingleMatch(layerId, matchExp, key) {
-    var inputs = [];
-    var outputs = [];
-    var inputOutputs = matchExp.slice(2);
-    var fallback = inputOutputs.pop();
-    inputOutputs.forEach(function(val, i) {
-        return i % 2 !== 0 ? outputs.push(val) : inputs.push(val);
-    });
-    outputs.push(fallback);
-    inputs = inputs.flat(1);
-    var isSingleInput = inputs.length === 1;
-    var isAppropriateOutputs = outputs.length === 2 && outputs.includes(true) && outputs.includes(false);
-    if (isSingleInput && isAppropriateOutputs) $456b392db4b6c0fb$var$warnings.push("".concat(layerId, ": ").concat(key, " contains single match expression ").concat(JSON.stringify(matchExp)));
-     // We return the existing match expression as-is because createRecurseStyle
-    // can also be used to transform a stylesheet, but we only want to use it to warn
-    return matchExp;
-};
-/**
- * isMatch
- * Condition to run single match linter on
- * @param {Array} exp - expression
- * @returns {boolean} - true or false
- */ var $456b392db4b6c0fb$var$isMatch = function isMatch(exp) {
-    return !!(Array.isArray(exp) && exp[0] === 'match');
-};
-var $456b392db4b6c0fb$var$lintSingleMatchExpressions = function lintSingleMatchExpressions(style) {
+ * lintSingleMatchExpressions
+ * Returns warnings for single match expressions in a Mapbox stylesheet
+ * @param {Object} style - Mapbox stylesheet
+ * @returns {Array} - warnings for singular match expressions
+ */ var $456b392db4b6c0fb$var$lintSingleMatchExpressions = function lintSingleMatchExpressions(style) {
+    var warnings = []; // This function runs inside the style expressions to find single matches and populate the warnings array
+    var lintSingleMatch = function lintSingleMatch(layerId, matchExp, key) {
+        var inputs = [];
+        var outputs = [];
+        var inputOutputs = matchExp.slice(2);
+        var fallback = inputOutputs.pop();
+        inputOutputs.forEach(function(val, i) {
+            return i % 2 !== 0 ? outputs.push(val) : inputs.push(val);
+        });
+        outputs.push(fallback);
+        inputs = inputs.flat(1);
+        var isSingleInput = inputs.length === 1;
+        var isAppropriateOutputs = outputs.length === 2 && outputs.includes(true) && outputs.includes(false);
+        if (isSingleInput && isAppropriateOutputs) warnings.push("".concat(layerId, ": ").concat(key, " contains single match expression ").concat(JSON.stringify(matchExp)));
+         // We return the existing match expression as-is because createRecurseStyle
+        // can also be used to transform a stylesheet, but we only want to use it to warn
+        return matchExp;
+    };
+    var isMatch = function isMatch(exp) {
+        return !!(Array.isArray(exp) && exp[0] === 'match');
+    };
     var lintSingleMatches = (0, $gXNCa$mapboxglstylerecurse.createRecurseStyle)({
-        transformFn: $456b392db4b6c0fb$var$lintSingleMatch,
-        transformCondition: $456b392db4b6c0fb$var$isMatch
+        transformFn: lintSingleMatch,
+        transformCondition: isMatch
     });
     lintSingleMatches(style);
-    return $456b392db4b6c0fb$var$warnings;
+    return warnings;
 };
 module.exports.lintSingleMatchExpressions = $456b392db4b6c0fb$var$lintSingleMatchExpressions;
 
