@@ -10,8 +10,7 @@
   "scripts": {
     "watch": "parcel watch",
     "build": "parcel build",
-    "test": "jest --watchAll",
-    "alex": "bin/mapbox-gl-style-performance-linter ../amazon-mapStyleSandbox/variants/gaia_en/style.json"
+    "test": "jest --watchAll"
   },
   "devDependencies": {
     "@babel/core": "^7.17.5",
