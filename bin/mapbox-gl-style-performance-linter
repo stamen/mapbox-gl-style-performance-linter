@@ -1,0 +1,10 @@
+#!/usr/bin/env node
+
+const fs = require('fs');
+const { lint } = require('../dist/main');
+
+const stylePath = process.argv[2];
+
+const stylesheet = JSON.parse(fs.readFileSync(stylePath, 'utf8'));
+
+console.log(lint(stylesheet));
