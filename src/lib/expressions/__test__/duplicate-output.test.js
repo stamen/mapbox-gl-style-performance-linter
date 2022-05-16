@@ -257,4 +257,29 @@ describe('lintExpressionDuplicateOutputs', () => {
     ];
     expect(actual).toEqual(expected);
   });
+
+  test('returns empty array for expression without duplicate outputs', () => {
+    style = {
+      id: 'my-style',
+      layers: [
+        {
+          id: 'layer-1',
+          paint: {
+            'fill-color': [
+              'interpolate',
+              ['linear'],
+              ['zoom'],
+              5,
+              'blue',
+              10,
+              'green'
+            ]
+          }
+        }
+      ]
+    };
+    const actual = lintExpressionDuplicateOutputs(style);
+    const expected = [];
+    expect(actual).toEqual(expected);
+  });
 });
