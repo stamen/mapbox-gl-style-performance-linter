@@ -1,4 +1,5 @@
 import { lintSingleMatchExpressions } from './expressions/single-match';
+import { lintExpressionDuplicateOutputs } from './expressions/duplicate-output';
 
 const lintExpressions = style => {
   let warnings = [];
