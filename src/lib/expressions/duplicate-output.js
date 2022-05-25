@@ -16,6 +16,30 @@ const hasOutputs = exp => {
   return flatExpression.some(item => expressionsWithOutputs.includes(item));
 };
 
+// Takes an array of indices and returns as an array of arrays containing the indices when they are in sequence
+const getSequentialIndexArrays = arr => {
+  if (!arr.every(item => typeof item === 'number')) {
+    console.error('Array is not made of index numbers');
+    return arr;
+  }
+  let next = [];
+
+  arr.forEach((index, i) => {
+    if (next.some(arr => arr.includes(index))) return;
+    let sequence = [];
+    let value = index;
+    let checkIndex = i;
+    do {
+      sequence.push(value);
+      checkIndex = checkIndex + 1;
+      value = arr[checkIndex];
+    } while (value === arr[checkIndex - 1] + 1);
+    next.push(sequence);
+  });
+
+  return next;
+};
+
 export const getDuplicateOutputs = value => {
   const expressionType = value[0];
   let inputOutputs = [];
@@ -50,17 +74,54 @@ export const getDuplicateOutputs = value => {
     }
   }
 
-  let stringifiedOutputs = outputs.map(item => JSON.stringify(item));
-  const dedupedOutputs = [...new Set(stringifiedOutputs)];
+  const stringifiedOutputs = outputs.map(item => JSON.stringify(item));
 
-  for (const output of dedupedOutputs) {
-    const index = stringifiedOutputs.findIndex(o => o === output);
-    stringifiedOutputs.splice(index, 1);
-  }
+  const isScale = expressionType === 'interpolate' || expressionType === 'step';
 
-  let duplicateOutputs = [...new Set(stringifiedOutputs)].map(o =>
-    JSON.parse(o)
-  );
+  let duplicateOutputs = new Set();
+
+  // Create arrays for all the indices outputs appear at
+  let outputIndexes = stringifiedOutputs.reduce((acc, o, i) => {
+    if (acc[o]) {
+      acc[o].push(i);
+    } else {
+      acc[o] = [i];
+    }
+    return acc;
+  }, {});
+
+  // Based on whether or not it is a scale expression, return whether we have invalid duplicates
+  // For scales, invalid duplicates include:
+  // - two identical outputs at the beginning of expression
+  // - two identical outputs at the end of expression
+  // - three identical outputs anywhere in an expression
+  // For conditionals, invalid duplicates include:
+  // - two identical outputs anywhere in the expression
+  Object.entries(outputIndexes).forEach(pair => {
+    const [k, v] = pair;
+
+    if (isScale) {
+      let sequences = getSequentialIndexArrays(v);
+      const firstIndex = 0;
+      const lastIndex = outputs.length - 1;
+      let beginning = sequences[0] || [];
+      let end = sequences[sequences.length - 1];
+      if (!beginning.includes(firstIndex)) beginning = [];
+      if (!end.includes(lastIndex)) end = [];
+
+      if (
+        beginning.length >= 2 ||
+        end.length >= 2 ||
+        sequences.some(arr => arr.length >= 3)
+      ) {
+        duplicateOutputs.add(k);
+      }
+    } else {
+      if (v.length > 1) duplicateOutputs.add(k);
+    }
+  });
+
+  duplicateOutputs = [...duplicateOutputs].map(d => JSON.parse(d));
 
   const nestedOutputs = outputs.filter(o => hasOutputs(o));
 

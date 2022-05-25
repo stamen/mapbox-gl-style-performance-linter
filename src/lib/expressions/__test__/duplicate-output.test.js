@@ -37,7 +37,7 @@ describe('getDuplicateOutputs', () => {
     ];
 
     const actual = getDuplicateOutputs(expression);
-    const expected = ['red', 'green'];
+    const expected = ['green', 'red'];
 
     expect(actual).toEqual(expected);
   });
@@ -153,6 +153,29 @@ describe('getDuplicateOutputs', () => {
 
     const actual = getDuplicateOutputs(expression);
     const expected = ['blue', 'green', 'brown'];
+
+    expect(actual).toEqual(expected);
+  });
+
+  test('does not return duplicates when in the middle of interpolate expression', () => {
+    expression = [
+      'interpolate',
+      ['linear'],
+      ['zoom'],
+      1,
+      'blue',
+      5,
+      'green',
+      10,
+      'green',
+      15,
+      'red',
+      16,
+      'green'
+    ];
+
+    const actual = getDuplicateOutputs(expression);
+    const expected = [];
 
     expect(actual).toEqual(expected);
   });
