@@ -1,4 +1,5 @@
 import {
+  getSequentialIndexArrays,
   getDuplicateOutputs,
   lintExpressionDuplicateOutputs
 } from '../duplicate-output';
@@ -364,6 +365,15 @@ describe('lintExpressionDuplicateOutputs', () => {
     };
     const actual = lintExpressionDuplicateOutputs(style);
     const expected = [];
+    expect(actual).toEqual(expected);
+  });
+});
+
+describe('getSequentialIndexArrays', () => {
+  test('returns appropriate sequences', () => {
+    const indices = [0, 1, 2, 3, 5, 7, 8, 9];
+    const actual = getSequentialIndexArrays(indices);
+    const expected = [[0, 1, 2, 3], [5], [7, 8, 9]];
     expect(actual).toEqual(expected);
   });
 });
