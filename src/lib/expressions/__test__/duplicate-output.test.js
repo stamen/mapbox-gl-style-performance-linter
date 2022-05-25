@@ -157,7 +157,45 @@ describe('getDuplicateOutputs', () => {
     expect(actual).toEqual(expected);
   });
 
-  test('does not return duplicates when in the middle of interpolate expression', () => {
+  test('interpolate returns duplicates when two identical outputs are at beginning of expression', () => {
+    expression = [
+      'interpolate',
+      ['linear'],
+      ['zoom'],
+      5,
+      'green',
+      10,
+      'green',
+      15,
+      'red'
+    ];
+
+    const actual = getDuplicateOutputs(expression);
+    const expected = ['green'];
+
+    expect(actual).toEqual(expected);
+  });
+
+  test('interpolate returns duplicates when two identical outputs are at end of expression', () => {
+    expression = [
+      'interpolate',
+      ['linear'],
+      ['zoom'],
+      1,
+      'red',
+      5,
+      'green',
+      10,
+      'green'
+    ];
+
+    const actual = getDuplicateOutputs(expression);
+    const expected = ['green'];
+
+    expect(actual).toEqual(expected);
+  });
+
+  test('interpolate does not return duplicates when two identical outputs are in middle of expression', () => {
     expression = [
       'interpolate',
       ['linear'],
@@ -176,6 +214,29 @@ describe('getDuplicateOutputs', () => {
 
     const actual = getDuplicateOutputs(expression);
     const expected = [];
+
+    expect(actual).toEqual(expected);
+  });
+
+  test('interpolate returns duplicates when three identical outputs are in middle of expression', () => {
+    expression = [
+      'interpolate',
+      ['linear'],
+      ['zoom'],
+      1,
+      'red',
+      5,
+      'green',
+      10,
+      'green',
+      15,
+      'green',
+      16,
+      'blue'
+    ];
+
+    const actual = getDuplicateOutputs(expression);
+    const expected = ['green'];
 
     expect(actual).toEqual(expected);
   });
