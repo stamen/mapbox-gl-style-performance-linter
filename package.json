@@ -10,7 +10,8 @@
   "scripts": {
     "watch": "parcel watch",
     "build": "parcel build",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "jest-watch": "jest --watch"
   },
   "devDependencies": {
     "@babel/core": "^7.17.5",
@@ -29,6 +30,7 @@
     "mapbox-gl-style-performance-linter": "bin/mapbox-gl-style-performance-linter"
   },
   "dependencies": {
+    "@mapbox/mapbox-gl-style-spec": "^13.24.0",
     "mapbox-gl-style-recurse": "github:stamen/mapbox-gl-style-recurse"
   }
 }
