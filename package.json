@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "repository": "git@github.com:stamen/mapbox-gl-style-performance-linter.git",
   "author": "Stamen Design",
-  "license": "ISC",
+  "license": "MIT",
   "source": "src/index.js",
   "main": "dist/main.js",
   "module": "dist/module.js",
