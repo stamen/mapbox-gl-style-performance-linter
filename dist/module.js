@@ -125,63 +125,26 @@ parcelRequire.register("6NtmY", function(module, exports) {
 Object.defineProperty(module.exports, "__esModule", {
     value: true
 });
-module.exports.lintExpressionDuplicateOutputs = module.exports.getDuplicateOutputs = void 0;
+module.exports.lintExpressionDuplicateOutputs = module.exports.getSequentialIndexArrays = module.exports.getDuplicateOutputs = void 0;
 
 
-function $4f2e19d78d9fcd75$var$_createForOfIteratorHelper(o, allowArrayLike) {
-    var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"];
-    if (!it) {
-        if (Array.isArray(o) || (it = $4f2e19d78d9fcd75$var$_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
-            if (it) o = it;
-            var i = 0;
-            var F = function F() {};
-            return {
-                s: F,
-                n: function n() {
-                    if (i >= o.length) return {
-                        done: true
-                    };
-                    return {
-                        done: false,
-                        value: o[i++]
-                    };
-                },
-                e: function e(_e) {
-                    throw _e;
-                },
-                f: F
-            };
-        }
-        throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-    }
-    var normalCompletion = true, didErr = false, err;
-    return {
-        s: function s() {
-            it = it.call(o);
-        },
-        n: function n() {
-            var step = it.next();
-            normalCompletion = step.done;
-            return step;
-        },
-        e: function e(_e2) {
-            didErr = true;
-            err = _e2;
-        },
-        f: function f() {
-            try {
-                if (!normalCompletion && it["return"] != null) it["return"]();
-            } finally{
-                if (didErr) throw err;
-            }
-        }
-    };
-}
 function $4f2e19d78d9fcd75$var$_toConsumableArray(arr) {
     return $4f2e19d78d9fcd75$var$_arrayWithoutHoles(arr) || $4f2e19d78d9fcd75$var$_iterableToArray(arr) || $4f2e19d78d9fcd75$var$_unsupportedIterableToArray(arr) || $4f2e19d78d9fcd75$var$_nonIterableSpread();
 }
 function $4f2e19d78d9fcd75$var$_nonIterableSpread() {
     throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function $4f2e19d78d9fcd75$var$_iterableToArray(iter) {
+    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+}
+function $4f2e19d78d9fcd75$var$_arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) return $4f2e19d78d9fcd75$var$_arrayLikeToArray(arr);
+}
+function $4f2e19d78d9fcd75$var$_slicedToArray(arr, i) {
+    return $4f2e19d78d9fcd75$var$_arrayWithHoles(arr) || $4f2e19d78d9fcd75$var$_iterableToArrayLimit(arr, i) || $4f2e19d78d9fcd75$var$_unsupportedIterableToArray(arr, i) || $4f2e19d78d9fcd75$var$_nonIterableRest();
+}
+function $4f2e19d78d9fcd75$var$_nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 function $4f2e19d78d9fcd75$var$_unsupportedIterableToArray(o, minLen) {
     if (!o) return;
@@ -191,16 +154,37 @@ function $4f2e19d78d9fcd75$var$_unsupportedIterableToArray(o, minLen) {
     if (n === "Map" || n === "Set") return Array.from(o);
     if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return $4f2e19d78d9fcd75$var$_arrayLikeToArray(o, minLen);
 }
-function $4f2e19d78d9fcd75$var$_iterableToArray(iter) {
-    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
-}
-function $4f2e19d78d9fcd75$var$_arrayWithoutHoles(arr) {
-    if (Array.isArray(arr)) return $4f2e19d78d9fcd75$var$_arrayLikeToArray(arr);
-}
 function $4f2e19d78d9fcd75$var$_arrayLikeToArray(arr, len) {
     if (len == null || len > arr.length) len = arr.length;
     for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
     return arr2;
+}
+function $4f2e19d78d9fcd75$var$_iterableToArrayLimit(arr, i) {
+    var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+    if (_i == null) return;
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _s, _e;
+    try {
+        for(_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true){
+            _arr.push(_s.value);
+            if (i && _arr.length === i) break;
+        }
+    } catch (err) {
+        _d = true;
+        _e = err;
+    } finally{
+        try {
+            if (!_n && _i["return"] != null) _i["return"]();
+        } finally{
+            if (_d) throw _e;
+        }
+    }
+    return _arr;
+}
+function $4f2e19d78d9fcd75$var$_arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
 }
 var $4f2e19d78d9fcd75$var$isExpression = $5OpyM$expression.isExpression;
 var $4f2e19d78d9fcd75$var$hasOutputs = function hasOutputs(exp) {
@@ -217,7 +201,32 @@ var $4f2e19d78d9fcd75$var$hasOutputs = function hasOutputs(exp) {
     return flatExpression.some(function(item) {
         return expressionsWithOutputs.includes(item);
     });
+}; // Takes an array of indices and returns as an array of arrays containing the indices when they are in sequence
+var $4f2e19d78d9fcd75$var$getSequentialIndexArrays = function getSequentialIndexArrays(arr1) {
+    if (!arr1.every(function(item) {
+        return typeof item === 'number';
+    })) {
+        console.error('Array is not made of index numbers');
+        return arr1;
+    }
+    var next = [];
+    arr1.forEach(function(index, i) {
+        if (next.some(function(arr) {
+            return arr.includes(index);
+        })) return;
+        var sequence = [];
+        var value = index;
+        var checkIndex = i;
+        do {
+            sequence.push(value);
+            checkIndex = checkIndex + 1;
+            value = arr1[checkIndex];
+        }while (value === arr1[checkIndex - 1] + 1)
+        next.push(sequence);
+    });
+    return next;
 };
+module.exports.getSequentialIndexArrays = $4f2e19d78d9fcd75$var$getSequentialIndexArrays;
 var $4f2e19d78d9fcd75$var$getDuplicateOutputs = function getDuplicateOutputs(value) {
     var expressionType = value[0];
     var inputOutputs = [];
@@ -257,24 +266,38 @@ var $4f2e19d78d9fcd75$var$getDuplicateOutputs = function getDuplicateOutputs(val
     var stringifiedOutputs = outputs.map(function(item) {
         return JSON.stringify(item);
     });
-    var dedupedOutputs = $4f2e19d78d9fcd75$var$_toConsumableArray(new Set(stringifiedOutputs));
-    var _iterator = $4f2e19d78d9fcd75$var$_createForOfIteratorHelper(dedupedOutputs), _step;
-    try {
-        var _loop = function _loop() {
-            var output = _step.value;
-            var index = stringifiedOutputs.findIndex(function(o) {
-                return o === output;
-            });
-            stringifiedOutputs.splice(index, 1);
-        };
-        for(_iterator.s(); !(_step = _iterator.n()).done;)_loop();
-    } catch (err) {
-        _iterator.e(err);
-    } finally{
-        _iterator.f();
-    }
-    var duplicateOutputs = $4f2e19d78d9fcd75$var$_toConsumableArray(new Set(stringifiedOutputs)).map(function(o) {
-        return JSON.parse(o);
+    var isScale = expressionType === 'interpolate' || expressionType === 'step';
+    var duplicateOutputs = new Set(); // Create arrays for all the indices outputs appear at
+    var outputIndexes = stringifiedOutputs.reduce(function(acc, o, i) {
+        if (acc[o]) acc[o].push(i);
+        else acc[o] = [
+            i
+        ];
+        return acc;
+    }, {}); // Based on whether or not it is a scale expression, return whether we have invalid duplicates
+    // For scales, invalid duplicates include:
+    // - two identical outputs at the beginning of expression
+    // - two identical outputs at the end of expression
+    // - three identical outputs anywhere in an expression
+    // For conditionals, invalid duplicates include:
+    // - two identical outputs anywhere in the expression
+    Object.entries(outputIndexes).forEach(function(pair) {
+        var _pair = $4f2e19d78d9fcd75$var$_slicedToArray(pair, 2), k = _pair[0], v = _pair[1];
+        if (isScale) {
+            var sequences = $4f2e19d78d9fcd75$var$getSequentialIndexArrays(v);
+            var firstIndex = 0;
+            var lastIndex = outputs.length - 1;
+            var beginning = sequences[0] || [];
+            var end = sequences[sequences.length - 1];
+            if (!beginning.includes(firstIndex)) beginning = [];
+            if (!end.includes(lastIndex)) end = [];
+            if (beginning.length >= 2 || end.length >= 2 || sequences.some(function(arr) {
+                return arr.length >= 3;
+            })) duplicateOutputs.add(k);
+        } else if (v.length > 1) duplicateOutputs.add(k);
+    });
+    duplicateOutputs = $4f2e19d78d9fcd75$var$_toConsumableArray(duplicateOutputs).map(function(d) {
+        return JSON.parse(d);
     });
     var nestedOutputs = outputs.filter(function(o) {
         return $4f2e19d78d9fcd75$var$hasOutputs(o);
