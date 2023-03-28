@@ -66,29 +66,6 @@ const getExtraneousMinMaxZoom = style => {
         : Object.keys(inputOutputPairs);
     zooms = zooms.map(Number);
 
-    // Check that expressions don't contain zooms outside of the min and max
-    // Noting that this is a personal choice in some instances
-    if (minzoom) {
-      const interpolatePastMinzoom = zooms.filter(z => z < minzoom);
-      if (interpolatePastMinzoom.length) {
-        warnings.push(
-          `${layerId}: ${key} expression contains zooms less than the minzoom - ${interpolatePastMinzoom.join(
-            ', '
-          )}`
-        );
-      }
-    }
-    if (maxzoom) {
-      const interpolatePastMaxzoom = zooms.filter(z => z > maxzoom);
-      if (interpolatePastMaxzoom.length) {
-        warnings.push(
-          `${layerId}: ${key} expression contains zooms greater than the maxzoom - ${interpolatePastMaxzoom.join(
-            ', '
-          )}`
-        );
-      }
-    }
-
     // Check that opacity of 0 doesn't make min/max zoom redundant
     if (key.includes('opacity')) {
       const pairEntries = Object.entries(inputOutputPairs).map(([k, v]) => [
@@ -120,7 +97,7 @@ const getExtraneousMinMaxZoom = style => {
 
         for (const pair of unnecessaryPairs) {
           warnings.push(
-            `${layerId}: ${key} is at zero opacity before the minzoom - ${pair[1]} at zoom ${pair[0]}`
+            `${layerId}: ${key} is at zero opacity before the minzoom - ${pair[1]} opacity at zoom ${pair[0]}`
           );
         }
       }
@@ -141,7 +118,7 @@ const getExtraneousMinMaxZoom = style => {
 
         for (const pair of unnecessaryPairs) {
           warnings.push(
-            `${layerId}: ${key} is at zero opacity before the maxzoom - ${pair[1]} at zoom ${pair[0]}`
+            `${layerId}: ${key} is at zero opacity before the maxzoom - ${pair[1]} opacity at zoom ${pair[0]}`
           );
         }
       }

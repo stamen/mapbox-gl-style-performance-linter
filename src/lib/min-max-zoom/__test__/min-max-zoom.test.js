@@ -32,54 +32,6 @@ describe('getExtraneousMinMaxZoom', () => {
     });
   });
 
-  describe('scale expression zooms outside min and max', () => {
-    let style = {
-      id: 'my-style',
-      layers: [
-        {
-          id: 'layer-1',
-          paint: {
-            'fill-color': [
-              'interpolate',
-              ['linear'],
-              ['zoom'],
-              5,
-              'red',
-              10,
-              'blue',
-              15,
-              'green'
-            ]
-          }
-        }
-      ]
-    };
-
-    test('simple interpolate past maxzoom warnings', () => {
-      const testStyle = JSON.parse(JSON.stringify(style));
-      testStyle.layers[0].maxzoom = 9;
-
-      const actual = getExtraneousMinMaxZoom(testStyle);
-      const expected = [
-        'layer-1: fill-color expression contains zooms greater than the maxzoom - 10, 15'
-      ];
-
-      expect(actual).toEqual(expected);
-    });
-
-    test('simple interpolate past minzoom warnings', () => {
-      const testStyle = JSON.parse(JSON.stringify(style));
-      testStyle.layers[0].minzoom = 7;
-
-      const actual = getExtraneousMinMaxZoom(testStyle);
-      const expected = [
-        'layer-1: fill-color expression contains zooms less than the minzoom - 5'
-      ];
-
-      expect(actual).toEqual(expected);
-    });
-  });
-
   describe('opacity 0 within min and max', () => {
     let style = {
       id: 'my-style',
@@ -110,7 +62,7 @@ describe('getExtraneousMinMaxZoom', () => {
 
       const actual = getExtraneousMinMaxZoom(testStyle);
       const expected = [
-        'layer-1: fill-opacity is at zero opacity before the maxzoom - 0 at zoom 15'
+        'layer-1: fill-opacity is at zero opacity before the maxzoom - 0 opacity at zoom 15'
       ];
 
       expect(actual).toEqual(expected);
@@ -133,7 +85,7 @@ describe('getExtraneousMinMaxZoom', () => {
 
       const actual = getExtraneousMinMaxZoom(testStyle);
       const expected = [
-        'layer-1: fill-opacity is at zero opacity before the minzoom - 0 at zoom 5'
+        'layer-1: fill-opacity is at zero opacity before the minzoom - 0 opacity at zoom 5'
       ];
 
       expect(actual).toEqual(expected);
@@ -177,7 +129,7 @@ describe('getExtraneousMinMaxZoom', () => {
 
       const actual = getExtraneousMinMaxZoom(testStyle);
       const expected = [
-        'layer-1: fill-opacity is at zero opacity before the maxzoom - 0 at zoom 15'
+        'layer-1: fill-opacity is at zero opacity before the maxzoom - 0 opacity at zoom 15'
       ];
 
       expect(actual).toEqual(expected);
@@ -198,7 +150,7 @@ describe('getExtraneousMinMaxZoom', () => {
 
       const actual = getExtraneousMinMaxZoom(testStyle);
       const expected = [
-        'layer-1: fill-opacity is at zero opacity before the minzoom - 0 at zoom 0'
+        'layer-1: fill-opacity is at zero opacity before the minzoom - 0 opacity at zoom 0'
       ];
 
       expect(actual).toEqual(expected);
@@ -219,7 +171,7 @@ describe('getExtraneousMinMaxZoom', () => {
 
       const actual = getExtraneousMinMaxZoom(testStyle);
       const expected = [
-        'layer-1: fill-opacity is at zero opacity before the maxzoom - 0 at zoom 15'
+        'layer-1: fill-opacity is at zero opacity before the maxzoom - 0 opacity at zoom 15'
       ];
 
       expect(actual).toEqual(expected);
@@ -245,8 +197,8 @@ describe('getExtraneousMinMaxZoom', () => {
 
       const actual = getExtraneousMinMaxZoom(testStyle);
       const expected = [
-        'layer-1: fill-opacity is at zero opacity before the minzoom - 0 at zoom 5',
-        'layer-1: fill-opacity is at zero opacity before the maxzoom - 0 at zoom 18'
+        'layer-1: fill-opacity is at zero opacity before the minzoom - 0 opacity at zoom 5',
+        'layer-1: fill-opacity is at zero opacity before the maxzoom - 0 opacity at zoom 18'
       ];
 
       expect(actual).toEqual(expected);
