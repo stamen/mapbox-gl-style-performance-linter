@@ -17,6 +17,7 @@ const hasOutputs = exp => {
 };
 
 // Takes an array of indices and returns as an array of arrays containing the indices when they are in sequence
+// For example, [1, 2, 3, 5] returns [[1, 2, 3], [5]] because 4 is skipped
 export const getSequentialIndexArrays = arr => {
   if (!arr.every(item => typeof item === 'number')) {
     console.error('Array is not made of index numbers');
