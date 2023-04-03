@@ -1,6 +1,6 @@
 {
   "name": "mapbox-gl-style-performance-linter",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "repository": "git@github.com:stamen/mapbox-gl-style-performance-linter.git",
   "author": "Stamen Design",
   "license": "MIT",
